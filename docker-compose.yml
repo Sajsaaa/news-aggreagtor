@@ -1,0 +1,24 @@
+version: "3"
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/var/www/html
+            - ./database:/var/www/html/database
+        working_dir: /var/www/html
+        command: php artisan serve --host=0.0.0.0 --port=8000
+
+    react:
+        build:
+            context: ./react
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./react:/app
+        working_dir: /app
+        command: npm run serve
